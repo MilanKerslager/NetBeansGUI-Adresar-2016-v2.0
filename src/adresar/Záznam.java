@@ -17,16 +17,17 @@ public class Záznam {
             System.out.println("žena");
         System.out.print("stav: ");
         switch (stav) {
-            case 1: System.out.println("svobodný");
+            case 0: System.out.println("svobodný");
                 break;
-            case 2: System.out.println("ženatý/vdaná");
+            case 1: System.out.println("ženatý/vdaná");
                 break;
-            case 3: System.out.println("rozvedený");
+            case 2: System.out.println("rozvedený");
                 break;
             default: System.out.println("neznámý");
                 break;
         }
         System.out.println("e-maily: TODO");
+        System.out.println();
     }
     
     public String getJmeno() {

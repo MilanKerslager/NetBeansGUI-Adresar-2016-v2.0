@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// aplikace pro uchování jmen osob a jejich e-mailů
+
 package adresar;
 
 import java.util.ArrayList;
@@ -18,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class HlavniOkno extends javax.swing.JFrame {
     
-    private ArrayList<Záznam> seznam = new ArrayList<Záznam>();
+    private ArrayList<Záznam> seznam = new ArrayList<>();
     private int index;
     private DefaultListModel emailseznam;
     // regulární výraz, který ověřuje korektní zápis e-mailové adresy

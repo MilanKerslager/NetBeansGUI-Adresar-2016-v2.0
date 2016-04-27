@@ -1,6 +1,8 @@
 package adresar;
 
-// konfliktní komentář!
+// třída obsahuje jeden záznam adresáře,
+// tj. všechny data zobrazená v rozhraní programu
+
 import java.util.ArrayList;
 
 public class Záznam {

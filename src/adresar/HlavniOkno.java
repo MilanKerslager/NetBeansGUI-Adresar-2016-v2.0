@@ -6,6 +6,8 @@
 package adresar;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
@@ -43,8 +45,8 @@ public class HlavniOkno extends javax.swing.JFrame {
             seznam.get(index).setJemuz(false);
         }
         seznam.get(index).setStav(jComboBoxStav.getSelectedIndex());
-        // chybí zápis e-mailů
-        
+        // zápis e-mailů do záznamu
+        seznam.get(index).setSeznamemailu(Collections.list(emailseznam.elements()));
     }
     /**
      * This method is called from within the constructor to initialize the form.

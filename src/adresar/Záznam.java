@@ -2,11 +2,14 @@ package adresar;
 
 // konfliktní komentář!
 
+import java.util.ArrayList;
+
+
 public class Záznam {
     private String jmeno, prijmeni, fotka;
     private boolean jemuz;
     private int stav;
-    private Emaily emaily;
+    private ArrayList<String> seznamemailu;
 
     public void predstavSe() {
         System.out.println("Výpis aktivního záznamu:");
@@ -28,7 +31,10 @@ public class Záznam {
             default: System.out.println("neznámý");
                 break;
         }
-        System.out.println("e-maily: TODO");
+        System.out.println("Seznam e-mailů:");
+        for (String prvek: seznamemailu) {
+            System.out.println("  "+prvek);
+        }
         System.out.println();
     }
     
@@ -72,13 +78,12 @@ public class Záznam {
         this.stav = stav;
     }
 
-    public Emaily getEmaily() {
-        return emaily;
+    public ArrayList<String> getSeznamemailu() {
+        return seznamemailu;
     }
 
-    public void setEmaily(Emaily emaily) {
-        this.emaily = emaily;
+    public void setSeznamemailu(ArrayList<String> seznamemailu) {
+        this.seznamemailu = seznamemailu;
     }
-    
-    
+
 }

@@ -1,5 +1,7 @@
 package adresar;
 
+// konfliktní komentář
+
 public class Záznam {
     private String jmeno, prijmeni, fotka;
     private boolean jemuz;

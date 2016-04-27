@@ -6,7 +6,6 @@
 package adresar;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,12 +17,13 @@ import javax.swing.JOptionPane;
  * @author ke
  */
 public class HlavniOkno extends javax.swing.JFrame {
-
+    
     private ArrayList<Záznam> seznam = new ArrayList<Záznam>();
     private int index;
     private DefaultListModel emailseznam;
     // regulární výraz, který ověřuje korektní zápis e-mailové adresy
     Pattern rexEmail = Pattern.compile("\\b[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}\\b");
+
     /**
      * Creates new form HlavniOkno
      */
@@ -35,7 +35,7 @@ public class HlavniOkno extends javax.swing.JFrame {
         emailseznam = new DefaultListModel();
         jListAdresy.setModel(emailseznam);
     }
-
+    
     private void zapisDoZaznamu(int index) {
         seznam.get(index).setJmeno(jTextFieldJmeno.getText());
         seznam.get(index).setPrijmeni(jTextFieldPrijmeni.getText());
@@ -48,6 +48,7 @@ public class HlavniOkno extends javax.swing.JFrame {
         // zápis e-mailů do záznamu
         seznam.get(index).setSeznamemailu(Collections.list(emailseznam.elements()));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -267,14 +268,15 @@ public class HlavniOkno extends javax.swing.JFrame {
     private void jButtonPridatEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPridatEActionPerformed
         jTextFieldEmail.setText(jTextFieldEmail.getText().toLowerCase());
         Matcher isEmail = rexEmail.matcher(jTextFieldEmail.getText());
-        if (! isEmail.find()) {
+        if (!isEmail.find()) {
             JOptionPane.showMessageDialog(this,
                     "Zadaný řetězec není e-mailová adresa!", "Chyba",
                     JOptionPane.ERROR_MESSAGE);
-        } else { 
-            if (! jTextFieldEmail.getText().isEmpty() &&
-                    ! emailseznam.contains(jTextFieldEmail.getText()))
+        } else {            
+            if (!jTextFieldEmail.getText().isEmpty()
+                    && !emailseznam.contains(jTextFieldEmail.getText())) {
                 emailseznam.addElement(jTextFieldEmail.getText());
+            }
             jListAdresy.setSelectedIndex(emailseznam.lastIndexOf(jTextFieldEmail.getText()));
         }
     }//GEN-LAST:event_jButtonPridatEActionPerformed

@@ -1,11 +1,10 @@
 package adresar;
 
 // konfliktní komentář!
-
 import java.util.ArrayList;
 
-
 public class Záznam {
+
     private String jmeno, prijmeni, fotka;
     private boolean jemuz;
     private int stav;
@@ -13,31 +12,36 @@ public class Záznam {
 
     public void predstavSe() {
         System.out.println("Výpis aktivního záznamu:");
-        System.out.println("jméno: "+this.jmeno);
-        System.out.println("příjmení: "+this.prijmeni);
+        System.out.println("jméno: " + this.jmeno);
+        System.out.println("příjmení: " + this.prijmeni);
         System.out.print("pohlaví: ");
-        if (this.jemuz)
+        if (this.jemuz) {
             System.out.println("muž");
-        else
+        } else {
             System.out.println("žena");
+        }
         System.out.print("stav: ");
         switch (stav) {
-            case 0: System.out.println("svobodný");
+            case 0:
+                System.out.println("svobodný");
                 break;
-            case 1: System.out.println("ženatý/vdaná");
+            case 1:
+                System.out.println("ženatý/vdaná");
                 break;
-            case 2: System.out.println("rozvedený");
+            case 2:
+                System.out.println("rozvedený");
                 break;
-            default: System.out.println("neznámý");
+            default:
+                System.out.println("neznámý");
                 break;
         }
         System.out.println("Seznam e-mailů:");
-        for (String prvek: seznamemailu) {
-            System.out.println("  "+prvek);
+        for (String prvek : seznamemailu) {
+            System.out.println("  " + prvek);
         }
         System.out.println();
     }
-    
+
     public String getJmeno() {
         return jmeno;
     }

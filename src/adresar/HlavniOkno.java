@@ -6,6 +6,10 @@
 package adresar;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +19,9 @@ public class HlavniOkno extends javax.swing.JFrame {
 
     private ArrayList<Záznam> seznam = new ArrayList<Záznam>();
     private int index;
+    private DefaultListModel emailseznam;
+    // regulární výraz, který ověřuje korektní zápis e-mailové adresy
+    Pattern rexEmail = Pattern.compile("\\b[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}\\b");
     /**
      * Creates new form HlavniOkno
      */
@@ -22,6 +29,9 @@ public class HlavniOkno extends javax.swing.JFrame {
         initComponents();
         index = 0;
         seznam.add(new Záznam());
+        // vytvoření modelu a propojení s jList
+        emailseznam = new DefaultListModel();
+        jListAdresy.setModel(emailseznam);
     }
 
     private void zapisDoZaznamu(int index) {
@@ -60,10 +70,9 @@ public class HlavniOkno extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jTextFieldEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jListAdresy = new javax.swing.JList<>();
         jButtonPridatE = new javax.swing.JButton();
         jButtonSmazatE = new javax.swing.JButton();
-        jButtonZmenitE = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,13 +163,26 @@ public class HlavniOkno extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("E-maily"));
 
-        jScrollPane1.setViewportView(jList1);
+        jListAdresy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListAdresyMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jListAdresy);
 
         jButtonPridatE.setText("Přidat");
+        jButtonPridatE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPridatEActionPerformed(evt);
+            }
+        });
 
         jButtonSmazatE.setText("Smazat");
-
-        jButtonZmenitE.setText("Změnit");
+        jButtonSmazatE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSmazatEActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Debug!");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -181,13 +203,12 @@ public class HlavniOkno extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonPridatE)
-                    .addComponent(jButtonSmazatE)
-                    .addComponent(jButtonZmenitE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButtonSmazatE, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButtonPridatE, jButtonSmazatE, jButtonZmenitE});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButtonPridatE, jButtonSmazatE});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,12 +220,9 @@ public class HlavniOkno extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButtonZmenitE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonSmazatE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addContainerGap())))
+                        .addComponent(jButton1))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,6 +261,30 @@ public class HlavniOkno extends javax.swing.JFrame {
         zapisDoZaznamu(index);
         seznam.get(index).predstavSe();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonPridatEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPridatEActionPerformed
+        jTextFieldEmail.setText(jTextFieldEmail.getText().toLowerCase());
+        Matcher isEmail = rexEmail.matcher(jTextFieldEmail.getText());
+        if (! isEmail.find()) {
+            JOptionPane.showMessageDialog(this,
+                    "Zadaný řetězec není e-mailová adresa!", "Chyba",
+                    JOptionPane.ERROR_MESSAGE);
+        } else { 
+            if (! jTextFieldEmail.getText().isEmpty() &&
+                    ! emailseznam.contains(jTextFieldEmail.getText()))
+                emailseznam.addElement(jTextFieldEmail.getText());
+            jListAdresy.setSelectedIndex(emailseznam.lastIndexOf(jTextFieldEmail.getText()));
+        }
+    }//GEN-LAST:event_jButtonPridatEActionPerformed
+
+    private void jListAdresyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListAdresyMouseClicked
+        jTextFieldEmail.setText(jListAdresy.getSelectedValue());
+    }//GEN-LAST:event_jListAdresyMouseClicked
+
+    private void jButtonSmazatEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSmazatEActionPerformed
+        jTextFieldEmail.setText(jListAdresy.getSelectedValue());
+        emailseznam.remove(jListAdresy.getSelectedIndex());
+    }//GEN-LAST:event_jButtonSmazatEActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,14 +326,13 @@ public class HlavniOkno extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonPridatE;
     private javax.swing.JButton jButtonSmazatE;
-    private javax.swing.JButton jButtonZmenitE;
     private javax.swing.JComboBox<String> jComboBoxStav;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jListAdresy;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButtonMuz;

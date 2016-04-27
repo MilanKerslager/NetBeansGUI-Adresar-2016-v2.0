@@ -7,7 +7,7 @@ public class Záznam {
     private Emaily emaily;
 
     public void predstavSe() {
-        System.out.println("Výpis záznamu");
+        System.out.println("Výpis aktivního záznamu:");
         System.out.println("jméno: "+this.jmeno);
         System.out.println("příjmení: "+this.prijmeni);
         System.out.print("pohlaví: ");
